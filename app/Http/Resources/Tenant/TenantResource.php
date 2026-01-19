@@ -14,6 +14,10 @@ class TenantResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'tenantName' => $this->name,
+            'phoneNumber' => $this->phone,
+            'url'   => $this->img? asset('/storage/' . $this->img) : null,
+        ];
     }
 }
