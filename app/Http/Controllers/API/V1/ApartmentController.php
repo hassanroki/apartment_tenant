@@ -57,7 +57,7 @@ class ApartmentController extends Controller
 
             return response()->json([
                 'message' => 'Apartment creation failed',
-                'error' => $e->getMessage(),
+                'errors' => $e->getMessage(),
             ], 422);
         }
     }
