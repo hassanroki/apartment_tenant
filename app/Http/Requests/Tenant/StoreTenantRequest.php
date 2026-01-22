@@ -25,10 +25,12 @@ class StoreTenantRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100'],
-            'phone' => ['required', 'unique:tenants,phone', 'max:11', 'min:11'],
-            'img' => ['nullable', 'mimes:png,jpg,jpeg,png,webp', 'max:2048'],
+            'phone' => ['required', 'numeric', 'digits:11', 'unique:tenants,phone'],
+            'img' => ['nullable', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
+
 
     // Custom Message
     public function messages()
@@ -36,13 +38,18 @@ class StoreTenantRequest extends FormRequest
         return [
             'name.required' => 'Name field দেওয়া আবশ্যক।',
             'name.max' => 'Name সর্বোচ্চ 100 অক্ষর হতে পারে।',
+            'phone.required' => 'Phone নাম্বার দেওয়া আবশ্যক।',
             'phone.numeric' => 'Phone অবশ্যই সংখ্যা হতে হবে।',
-            'phone.min'  => 'phone সর্বোনিম্ন 11 ডিজিট হতে হবে।',
-            'phone.max'  => 'phone সর্বাধিক 11 ডিজিট হতে হবে।',
-            'img.mimes'  => 'Image অবশ্যই jpg, jpeg, png, gif বা webp ফাইল হতে হবে।',
+            'phone.digits'  => 'Phone অবশ্যই ১১ ডিজিটের হতে হবে।',
+            'phone.unique'  => 'এই Phone নাম্বারটি ইতিমধ্যে ব্যবহার করা হয়েছে।',
+            'img.mimes' => 'Image অবশ্যই jpg, jpeg, png বা webp ফাইল হতে হবে।',
             'img.max'   => 'Image সর্বাধিক 2MB হতে পারে।',
+            'password.required' => 'Password field দেওয়া আবশ্যক।',
+            'password.min' => 'Password সর্বোনিম্ন ৬ অক্ষরের হতে হবে।',
+            'password.confirmed' => 'Password এবং Confirm Password মিলছে না।',
         ];
     }
+
 
 
     // Handle Failed Validation

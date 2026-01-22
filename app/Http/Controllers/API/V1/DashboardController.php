@@ -13,14 +13,27 @@ class DashboardController extends Controller
     // summary
     public function summary()
     {
+        // return response()->json([
+        //     'totalApartment' => Apartment::count(),
+        //     'totalTenant' => Tenant::count(),
+        //     'bookedApartment' => ApartmentResource::collection(
+        //         Apartment::whereHas('currentBooking')->get()
+        //     ),
+        //     'vacantApartment' => ApartmentResource::collection(
+        //         Apartment::whereDoesntHave('currentBooking')->get()
+        //     )
+        // ]);
         return response()->json([
             'totalApartment' => Apartment::count(),
             'totalTenant' => Tenant::count(),
             'bookedApartment' => ApartmentResource::collection(
-                Apartment::whereHas('currentBooking')->get()
+                Apartment::with('currentBooking.tenant')
+                    ->whereHas('currentBooking')
+                    ->get()
             ),
             'vacantApartment' => ApartmentResource::collection(
-                Apartment::whereDoesntHave('currentBooking')->get()
+                Apartment::whereDoesntHave('currentBooking')
+                    ->get()
             )
         ]);
     }
