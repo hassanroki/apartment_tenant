@@ -27,12 +27,12 @@ class DashboardController extends Controller
             'totalApartment' => Apartment::count(),
             'totalTenant' => Tenant::count(),
             'bookedApartment' => ApartmentResource::collection(
-                Apartment::with('currentBooking.tenant')
-                    ->whereHas('currentBooking')
+                Apartment::with('activeOrUpcomingBooking.tenant')
+                    ->whereHas('activeOrUpcomingBooking')
                     ->get()
             ),
             'vacantApartment' => ApartmentResource::collection(
-                Apartment::whereDoesntHave('currentBooking')
+                Apartment::whereDoesntHave('activeOrUpcomingBooking')
                     ->get()
             )
         ]);

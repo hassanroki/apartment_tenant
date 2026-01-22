@@ -32,6 +32,14 @@ class Apartment extends Model
             ->whereDate('end_date', '>=', now());
     }
 
+    public function activeOrUpcomingBooking()
+    {
+        return $this->hasOne(Booking::class)
+            ->whereDate('end_date', '>=', now())
+            ->latest()
+            ->limit(1);
+    }
+
     // Protected Cast
     protected $casts = [
         'rent' => 'decimal:2',
