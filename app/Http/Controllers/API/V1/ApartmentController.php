@@ -39,6 +39,8 @@ class ApartmentController extends Controller
             $apartment = Apartment::create([
                 'name' => $validatedData['name'],
                 'rent' => $validatedData['rent'],
+                'status' => $validatedData['status'],
+                'descriptions' => $validatedData['descriptions'],
                 'img'  => $imagePath,
             ]);
 
@@ -60,5 +62,72 @@ class ApartmentController extends Controller
                 'errors' => $e->getMessage(),
             ], 422);
         }
+    }
+
+    // Apartment Edit
+    public function edit($id)
+    {
+        $apartment = Apartment::findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'data' => $apartment,
+        ]);
+    }
+
+    // Apartment Update
+    public function update(StoreApartmentRequest $request, $id)
+    {
+        $validatedData = $request->validated();
+
+        try {
+            $apartment = Apartment::findOrFail($id);
+
+            // Update basic fields
+            $apartment->name = $validatedData['name'];
+            $apartment->rent = $validatedData['rent'];
+            $apartment->status = $validatedData['status'];
+            $apartment->descriptions = $validatedData['descriptions'];
+
+            // Image handling
+            if ($request->hasFile('img')) {
+                // Old image delete
+                if ($apartment->img) {
+                    Storage::disk('public')->delete($apartment->img);
+                }
+
+                // Save new image
+                $apartment->img = $request->file('img')->store('apartments', 'public');
+            }
+
+            $apartment->save();
+
+            return response()->json([
+                'message' => 'Apartment updated successfully',
+                'data' => $apartment
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Apartment update failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    // Delete Apartment
+    public function destroy($id)
+    {
+        $apartment = Apartment::findOrFail($id);
+
+        // Delete image if exists
+        if ($apartment->img && Storage::disk('public')->exists($apartment->img)) {
+            Storage::disk('public')->delete($apartment->img);
+        }
+
+        $apartment->delete();
+
+        return response()->json([
+            'message' => 'Apartment deleted successfully',
+        ], 200);
     }
 }

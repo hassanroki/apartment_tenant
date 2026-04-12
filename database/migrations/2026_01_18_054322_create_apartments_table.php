@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->decimal('rent', 10, 2)->unsigned();
             $table->string('img')->nullable();
+            $table->boolean('status')->default(false);
+            $table->longText('descriptions');
             $table->timestamps();
         });
     }
