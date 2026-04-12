@@ -21,6 +21,7 @@ class BookingResource extends JsonResource
             'apartment' => [
                 'apartmentId' => $this->apartment->id,
                 'apartmentName' => $this->apartment->name,
+                'apartmentRent' => $this->apartment->rent,
             ],
             'tenant' => [
                 'tenantId' => $this->tenant->id,

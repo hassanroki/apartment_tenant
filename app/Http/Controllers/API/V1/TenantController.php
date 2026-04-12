@@ -5,9 +5,12 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\StoreTenantRequest;
 use App\Http\Requests\Tenant\TenantLoginRequest;
+use App\Http\Resources\Booking\BookingCollection;
 use App\Http\Resources\Tenant\TenantCollection;
 use App\Http\Resources\Tenant\TenantResource;
+use App\Models\Booking;
 use App\Models\Tenant;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +19,26 @@ use Throwable;
 
 class TenantController extends Controller
 {
+    // Booking
+
+    public function bookings()
+    {
+        try {
+            $tenantId = auth('sanctum')->id();
+            $booking = Booking::with(['apartment', 'tenant'])->where('tenant_id', $tenantId)->get();
+
+            return response()->json([
+                'message' => 'Booking retrieved successfully',
+                'data' => new BookingCollection($booking),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     // Tenant List
     public function index()
     {

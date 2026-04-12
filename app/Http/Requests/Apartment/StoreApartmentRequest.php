@@ -27,6 +27,8 @@ class StoreApartmentRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'rent' => ['nullable', 'numeric', 'min:1', 'max:99999'],
             'img' => ['nullable', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:2048'],
+            'status' => ['required', 'boolean'],
+            'descriptions' => ['required', 'string'],
         ];
     }
 
@@ -41,6 +43,11 @@ class StoreApartmentRequest extends FormRequest
             'rent.max'  => 'Rent সর্বাধিক 99999 হতে পারে।',
             'img.mimes'  => 'Image অবশ্যই jpg, jpeg, png, gif বা webp ফাইল হতে হবে।',
             'img.max'   => 'Image সর্বাধিক 2MB হতে পারে।',
+            'status.required' => 'Status দেওয়া আবশ্যক।',
+            'status.boolean'  => 'Status অবশ্যই true বা false (1 বা 0) হতে হবে।',
+
+            'descriptions.required' => 'Descriptions দেওয়া আবশ্যক।',
+            'descriptions.string'   => 'Descriptions অবশ্যই টেক্সট আকারে হতে হবে।',
         ];
     }
 

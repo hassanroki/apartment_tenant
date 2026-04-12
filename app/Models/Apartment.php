@@ -16,6 +16,8 @@ class Apartment extends Model
         'name',
         'rent',
         'img',
+        'status',
+        'descriptions',
     ];
 
     // Booking
