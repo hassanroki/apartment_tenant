@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Apartment\StoreApartmentRequest;
 use App\Http\Resources\Apartment\ApartmentCollection;
+use App\Jobs\ApartmentCreateEmailJob;
 use App\Models\Apartment;
 use Exception;
 use Illuminate\Http\Request;
@@ -45,6 +46,9 @@ class ApartmentController extends Controller
             ]);
 
             DB::commit();
+
+            // Send Message
+            ApartmentCreateEmailJob::dispatch($apartment);
 
             return response()->json([
                 'message' => 'Apartment created successfully',
