@@ -108,7 +108,7 @@
                     document.getElementById('apartments').innerHTML += (`
                     <div class="col-md-6 col-lg-4">
                         <div class="card">
-                            <img src="${item['img']}" alt="${item['name']}" class="card-img-top">
+                            <img src="storage/${item['img']}" alt="${item['name']}" class="card-img-top">
                             <div class="card-body">
                                 <h2>${item['name']}</h2>
                                 <p> <i class="bi bi-geo-alt"></i> Dhanmondi , Dhaka</p>
