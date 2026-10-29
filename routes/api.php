@@ -6,7 +6,6 @@ use App\Http\Controllers\API\V1\BookingController;
 use App\Http\Controllers\API\V1\DashboardController;
 use App\Http\Controllers\API\V1\TenantController;
 use App\Models\Apartment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {

@@ -14,15 +14,23 @@ Route::get('/admin/login', function () {
 });
 
 Route::get('/admin/dashboard', function () {
-    return view('backend.dashboard');
+    return view('backend.dashboard.index');
+});
+
+Route::get('/admin/dashboard/apartment', function () {
+    return view('backend.apartment.index');
 });
 
 Route::get('/admin/dashboard/apartment/create', function () {
-    return view('backend.create');
+    return view('backend.apartment.create');
 });
 
 Route::get('/admin/dashboard/apartment/{id}/edit', function () {
-    return view('backend.edit');
+    return view('backend.apartment.edit');
+});
+
+Route::get('/admin/dashboard/tenant-list', function(){
+    return view('backend.tenant.index') ;
 });
 
 
@@ -42,6 +50,4 @@ Route::get('/tenant/dashboard', function () {
     return view('frontend.dashboard');
 });
 
-Route::get('/admin/dashboard/tenant-list', function(){
-    return view('backend.tenant-list') ;
-});
+
